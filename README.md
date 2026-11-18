@@ -53,6 +53,10 @@ Exact installation steps depend on the target platform and will be documented in
 
 See [`docs/installation.md`](docs/installation.md) for local use and [`docs/release-checklist.md`](docs/release-checklist.md) for readiness criteria. The project is not yet a published V1.0.0 release.
 
+## Install in an agent platform
+
+Download the upload bundle from [`packages/AI-Startup-Planner.zip`](packages/AI-Startup-Planner.zip) and follow the platform-specific steps in [`docs/agent-platform-installation.md`](docs/agent-platform-installation.md). A GitHub upload alone does not install or activate the Skill in ChatGPT, Doubao, or DeepSeek.
+
 ### Validate the data examples
 
 The fixture under `tests/fixtures/synthetic-project/` is fictional and exists only to demonstrate the schemas. It is not a real venture or market research. From this repository directory, install the development dependency and run:
