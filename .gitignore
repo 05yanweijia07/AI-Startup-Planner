@@ -1,0 +1,22 @@
+# Python and local validation artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local credentials and environment settings
+.env
+.env.*
+!.env.example
+
+# Local-only venture data must stay out of the reusable Skill repository
+project-workspaces/
+projects/
+AI-Startup-Projects/
+
+# Build outputs and operating-system files
+dist/
+build/
+.DS_Store
+Thumbs.db
+Desktop.ini

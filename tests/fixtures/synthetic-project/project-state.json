@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "DEMO-001",
+  "status": "active",
+  "current_gate": "G2",
+  "gate_statuses": {
+    "G1": {"status": "pass", "evidence_refs": [], "open_risks": [], "reviewed_at": "2026-01-11T09:00:00Z", "decision_ref": null},
+    "G2": {"status": "conditional", "evidence_refs": ["EVD-001"], "open_risks": ["The example does not establish real customer demand."], "reviewed_at": "2026-01-12T09:00:00Z", "decision_ref": "DEC-001"},
+    "G3": {"status": "not_started", "evidence_refs": [], "open_risks": []},
+    "G4": {"status": "not_started", "evidence_refs": [], "open_risks": []},
+    "G5": {"status": "not_started", "evidence_refs": [], "open_risks": []},
+    "G6": {"status": "not_started", "evidence_refs": [], "open_risks": []}
+  },
+  "active_tasks": [{"item_id": "TASK-001", "description": "Draft a fictional interview guide.", "status": "in_progress", "gate": "G2", "related_refs": ["ASM-001"]}],
+  "blockers": [],
+  "next_actions": [{"item_id": "TASK-002", "description": "Review the sample interview questions.", "status": "open", "gate": "G2", "related_refs": []}],
+  "stale_deliverables": [],
+  "last_resumed_at": null,
+  "updated_at": "2026-01-12T09:00:00Z",
+  "state_note": "Synthetic fixture only. No real customer research has been performed."
+}

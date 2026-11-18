@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "DEMO-001",
+  "decisions": [{
+    "decision_id": "DEC-001",
+    "topic": "Initial validation area",
+    "choice": "Use a fictional test district in planning examples.",
+    "rationale": "Keeps the fixture self-contained and avoids implying real market research.",
+    "status": "confirmed",
+    "decided_at": "2026-01-11T09:00:00Z",
+    "decided_by": "Example founder",
+    "evidence_refs": ["EVD-001"],
+    "impact_refs": ["project-state.json"]
+  }]
+}

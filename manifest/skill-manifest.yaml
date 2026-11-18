@@ -1,0 +1,30 @@
+manifest_version: 1.0.0
+skill:
+  id: ai-startup-planner
+  name: AI Startup Planner
+  version: 1.0.0
+  status: in_development
+  description: Portable, evidence-led startup planning copilot.
+  default_user_language: zh-CN
+architecture:
+  core: SKILL.md
+  adapters_directory: adapters/
+  web_app_adapters:
+    - adapters/doubao/README.md
+    - adapters/deepseek/README.md
+  project_data_location: separate_workspace
+  project_data_is_part_of_skill_source: false
+registries:
+  modules: manifest/module-registry.yaml
+  tools: manifest/tool-registry.yaml
+data_schemas:
+  directory: schemas/
+  dialect: https://json-schema.org/draft/2020-12/schema
+capability_policy:
+  discover_at_runtime: true
+  assume_all_capabilities_available: false
+  require_explicit_authorization_for_external_writes: true
+release:
+  github_upload_authorized: false
+  target: V1.0.0
+  current_scope: local_candidate_with_manual_web_app_adapters

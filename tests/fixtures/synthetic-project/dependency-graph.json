@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "DEMO-001",
+  "nodes": [
+    {"node_id": "ASM-001", "kind": "assumption", "label": "Online booking preference", "ref": "ASM-001", "status": "current"},
+    {"node_id": "TASK-001", "kind": "analysis", "label": "Interview guide", "ref": "project-state.json#/active_tasks/TASK-001", "status": "current"}
+  ],
+  "edges": [{"from": "TASK-001", "to": "ASM-001", "relation": "depends_on", "note": "Interview questions should test this assumption."}]
+}

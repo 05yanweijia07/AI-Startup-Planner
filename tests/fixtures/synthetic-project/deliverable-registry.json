@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "DEMO-001",
+  "deliverables": [{
+    "deliverable_id": "OUT-001",
+    "title": "Fictional interview guide",
+    "kind": "report",
+    "path": "research/interview-guide.md",
+    "status": "draft",
+    "version": "0.1.0",
+    "updated_at": "2026-01-12T09:00:00Z",
+    "source_refs": ["ASM-001"],
+    "assumption_refs": ["ASM-001"],
+    "notes": "Example registry entry; referenced artifact is illustrative and not included."
+  }]
+}

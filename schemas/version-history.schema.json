@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-startup-planner.local/schemas/version-history.schema.json",
+  "title": "Project Version History",
+  "description": "Append-only snapshots or milestones describing meaningful project changes. Entries are references, not copies of all project data.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "entries"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/id"},
+    "entries": {"type": "array", "items": {"$ref": "#/$defs/item"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version_id", "recorded_at", "change_type", "summary"],
+      "properties": {
+        "version_id": {"$ref": "#/$defs/id"},
+        "recorded_at": {"type": "string", "format": "date-time"},
+        "change_type": {"type": "string", "enum": ["snapshot", "decision_change", "evidence_update", "gate_change", "deliverable_update", "recovery", "other"]},
+        "summary": {"type": "string", "minLength": 1},
+        "snapshot_ref": {"type": ["string", "null"], "description": "Workspace-relative path or external version identifier, if a snapshot exists."},
+        "changed_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "actor": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

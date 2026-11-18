@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-startup-planner.local/schemas/deliverable-registry.schema.json",
+  "title": "Deliverable Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "deliverables"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/id"},
+    "deliverables": {"type": "array", "items": {"$ref": "#/$defs/item"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deliverable_id", "title", "kind", "path", "status", "updated_at"],
+      "properties": {
+        "deliverable_id": {"$ref": "#/$defs/id"},
+        "title": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "enum": ["report", "business_plan", "spreadsheet", "presentation", "pdf", "image", "other"]},
+        "path": {"type": "string", "minLength": 1, "description": "Workspace-relative path; do not store machine-specific absolute paths."},
+        "status": {"type": "string", "enum": ["draft", "reviewed", "approved", "superseded", "archived"]},
+        "version": {"type": ["string", "null"]},
+        "updated_at": {"type": "string", "format": "date-time"},
+        "source_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "assumption_refs": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+        "notes": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

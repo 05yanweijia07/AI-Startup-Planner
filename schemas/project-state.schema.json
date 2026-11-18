@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-startup-planner.local/schemas/project-state.schema.json",
+  "title": "AI Startup Planner Project State",
+  "description": "Current, resumable work state for one venture. Decision and evidence details belong in their registries; this file stores current status and references.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "status",
+    "current_gate",
+    "gate_statuses",
+    "active_tasks",
+    "blockers",
+    "next_actions",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "description": "Must match project-profile.json project_id."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "paused", "completed", "archived"]
+    },
+    "current_gate": {
+      "type": ["string", "null"],
+      "enum": ["G1", "G2", "G3", "G4", "G5", "G6", null]
+    },
+    "gate_statuses": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["G1", "G2", "G3", "G4", "G5", "G6"],
+      "properties": {
+        "G1": {"$ref": "#/$defs/gateStatus"},
+        "G2": {"$ref": "#/$defs/gateStatus"},
+        "G3": {"$ref": "#/$defs/gateStatus"},
+        "G4": {"$ref": "#/$defs/gateStatus"},
+        "G5": {"$ref": "#/$defs/gateStatus"},
+        "G6": {"$ref": "#/$defs/gateStatus"}
+      }
+    },
+    "active_tasks": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/workItem"},
+      "default": []
+    },
+    "blockers": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/workItem"},
+      "default": []
+    },
+    "next_actions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/workItem"},
+      "default": []
+    },
+    "stale_deliverables": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true,
+      "default": []
+    },
+    "last_resumed_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "state_note": {
+      "type": ["string", "null"],
+      "description": "Short human-readable context for recovery; not an alternative source of authoritative project facts."
+    }
+  },
+  "$defs": {
+    "gateStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidence_refs", "open_risks"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["not_started", "not_ready", "conditional", "pass", "not_applicable"]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true,
+          "description": "IDs or workspace-relative paths in the evidence registry or source material."
+        },
+        "open_risks": {
+          "type": "array",
+          "items": {"type": "string"},
+          "default": []
+        },
+        "reviewed_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "decision_ref": {
+          "type": ["string", "null"],
+          "description": "Optional decision-log ID for a user-approved gate decision."
+        }
+      }
+    },
+    "workItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["item_id", "description", "status"],
+      "properties": {
+        "item_id": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1},
+        "status": {
+          "type": "string",
+          "enum": ["open", "in_progress", "blocked", "done", "deferred"]
+        },
+        "gate": {
+          "type": ["string", "null"],
+          "enum": ["G1", "G2", "G3", "G4", "G5", "G6", null]
+        },
+        "related_refs": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true,
+          "default": []
+        }
+      }
+    }
+  }
+}

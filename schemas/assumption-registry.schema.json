@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-startup-planner.local/schemas/assumption-registry.schema.json",
+  "title": "Assumption Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "assumptions"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/id"},
+    "assumptions": {"type": "array", "items": {"$ref": "#/$defs/item"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assumption_id", "statement", "status", "impact", "validation_method"],
+      "properties": {
+        "assumption_id": {"$ref": "#/$defs/id"},
+        "statement": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "enum": ["unvalidated", "testing", "supported", "rejected", "superseded"]},
+        "impact": {"type": "string", "enum": ["high", "medium", "low"]},
+        "validation_method": {"type": ["string", "null"]},
+        "owner": {"type": ["string", "null"]},
+        "created_at": {"type": "string", "format": "date-time"},
+        "review_by": {"type": ["string", "null"], "format": "date"},
+        "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+        "related_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    }
+  }
+}

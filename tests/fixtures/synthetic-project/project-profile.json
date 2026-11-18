@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "DEMO-001",
+  "project_name": "Sample Neighborhood Repair Service",
+  "description": "Fictional fixture used only to demonstrate project data formats.",
+  "industries": {
+    "primary": "local-services",
+    "secondary": [],
+    "supporting": []
+  },
+  "business_model": "pay-per-service",
+  "target_customers": ["residents in a fictional test district"],
+  "team_size": 1,
+  "initial_budget": {
+    "amount": 1000,
+    "currency": "USD"
+  },
+  "development_stage": "validation",
+  "constraints": ["Fictional example; not a real business or market claim."],
+  "created_at": "2026-01-10T09:00:00Z",
+  "updated_at": "2026-01-12T09:00:00Z"
+}

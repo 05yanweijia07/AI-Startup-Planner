@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "DEMO-001",
+  "entries": [{
+    "version_id": "VER-001",
+    "recorded_at": "2026-01-12T09:00:00Z",
+    "change_type": "snapshot",
+    "summary": "Created the initial synthetic fixture state.",
+    "snapshot_ref": null,
+    "changed_refs": ["project-profile.json", "project-state.json"],
+    "actor": "AI Startup Planner fixture"
+  }]
+}

@@ -1,0 +1,93 @@
+registry_version: 1.0.0
+description: >-
+  Platform-neutral capability contracts. Entries describe needed capabilities,
+  not connected tools. Runtime availability and authorization must be checked each time.
+permission_classes:
+  read_only: Read information without changing files or external state.
+  local_write: Create or modify files in the authorized local workspace.
+  external_write: Change a repository, service, account, or other external system; explicit authorization required.
+  destructive: Delete, overwrite, publish, send, or otherwise cause hard-to-reverse effects; inspect scope and obtain explicit authorization.
+tools:
+  - tool_id: TOOL-RESEARCH-001
+    name: web_research
+    category: research
+    purpose: Find and review public market, industry, policy, competitor, or customer information.
+    triggers: [market_research, competitor_analysis, current_policy_check]
+    inputs: [research_question, geography, date_or_period]
+    outputs: [sources, findings, limitations]
+    permission: read_only
+    side_effects: none
+    fallback: State limitation and provide a bounded desk-research plan.
+    availability: platform_dependent
+
+  - tool_id: TOOL-FILE-001
+    name: file_read
+    category: file
+    purpose: Read user-authorized project files and source documents.
+    triggers: [project_recovery, document_analysis, state_update]
+    inputs: [authorized_path]
+    outputs: [file_contents_or_extracted_data]
+    permission: read_only
+    side_effects: none
+    fallback: Ask the user to provide the relevant excerpt or file.
+    availability: platform_dependent
+
+  - tool_id: TOOL-FILE-002
+    name: file_write
+    category: file
+    purpose: Create or update local project artifacts within the authorized workspace.
+    triggers: [create_deliverable, authorized_project_update]
+    inputs: [target_path, content, change_scope]
+    outputs: [created_or_updated_file, change_summary]
+    permission: local_write
+    side_effects: local_file_change
+    fallback: Return proposed content and intended path for user to save.
+    availability: platform_dependent
+
+  - tool_id: TOOL-DATA-001
+    name: structured_data_validation
+    category: data
+    purpose: Validate JSON instances against schemas and check cross-file references.
+    triggers: [project_state_validation, schema_example_validation]
+    inputs: [schema_paths, data_paths]
+    outputs: [validation_result, errors]
+    permission: read_only
+    side_effects: none
+    fallback: Perform syntax checks and clearly state semantic validation was unavailable.
+    availability: platform_dependent
+
+  - tool_id: TOOL-FIN-001
+    name: financial_calculation
+    category: financial
+    purpose: Calculate costs, margins, break-even, cash flow, and scenario sensitivities.
+    triggers: [cost_analysis, pricing, break_even, cash_flow, scenario_analysis]
+    inputs: [numeric_inputs, units, currency, period, assumptions]
+    outputs: [formulas, results, scenario_comparison, limitations]
+    permission: read_only
+    side_effects: none
+    fallback: Show formulas and calculate transparently from provided inputs.
+    availability: platform_dependent
+
+  - tool_id: TOOL-VIS-001
+    name: visualization
+    category: visualization
+    purpose: Create charts, diagrams, canvases, or process views for a requested deliverable.
+    triggers: [chart_requested, process_visualization, plan_diagram]
+    inputs: [structured_data, visual_format]
+    outputs: [visual_artifact]
+    permission: local_write
+    side_effects: local_artifact_creation
+    fallback: Provide a text table or Mermaid diagram.
+    availability: platform_dependent
+
+  - tool_id: TOOL-INT-001
+    name: repository_sync
+    category: integration
+    purpose: Push or synchronize the reusable Skill source or project data with a hosted repository.
+    triggers: [explicit_repository_upload, explicit_repository_sync]
+    inputs: [repository_identity, selected_files, target_branch]
+    outputs: [remote_commit_or_sync_result]
+    permission: external_write
+    side_effects: remote_repository_change
+    fallback: Prepare local commit and provide manual push instructions.
+    availability: platform_dependent

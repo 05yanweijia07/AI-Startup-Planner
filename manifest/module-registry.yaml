@@ -1,0 +1,190 @@
+registry_version: 1.0.0
+skill_version: 1.0.0
+description: >-
+  Portable index of core and professional modules. Planned entries describe routing
+  intent only; they are not a claim that the referenced files already exist.
+loading_policy:
+  levels:
+    L0: Core control rules always active.
+    L1: Task-specific core references and data schemas.
+    L2: Professional or industry references required by the task.
+    L3: Templates and output-specific resources loaded only when producing that artifact.
+  priorities: [MANDATORY, RECOMMENDED, OPTIONAL, EXCLUDED]
+modules:
+  - module_id: CORE-001
+    name: portable-control
+    category: core
+    description: Identity, scope, task routing, modes, gates, permissions, quality, and delivery.
+    status: implemented
+    triggers: [all_in_scope_requests]
+    exclusions: []
+    industries: [all]
+    dependencies: []
+    default_priority: MANDATORY
+    loading_level: L0
+    inputs: [user_request, available_project_context]
+    outputs: [task_plan, response_or_deliverable]
+    references: [SKILL.md]
+    version: 1.0.0
+
+  - module_id: PI-001
+    name: project-intelligence-schemas
+    category: project-intelligence
+    description: Schemas for project profile, state, decisions, evidence, assumptions, dependencies, deliverables, and history.
+    status: implemented
+    triggers: [project_setup, project_recovery, project_update, persistent_build]
+    exclusions: [quick_answer_without_state_change]
+    industries: [all]
+    dependencies: [CORE-001]
+    default_priority: RECOMMENDED
+    loading_level: L1
+    inputs: [project_id, relevant_project_records]
+    outputs: [validated_or_proposed_project_state]
+    references:
+      - schemas/project-profile.schema.json
+      - schemas/project-state.schema.json
+      - schemas/decision-log.schema.json
+      - schemas/evidence-registry.schema.json
+      - schemas/assumption-registry.schema.json
+      - schemas/dependency-graph.schema.json
+      - schemas/deliverable-registry.schema.json
+      - schemas/version-history.schema.json
+      - references/core/project-initialization.md
+      - references/core/state-management.md
+      - references/core/decision-management.md
+      - references/core/evidence-management.md
+      - references/core/assumption-management.md
+      - references/core/dependency-management.md
+      - references/core/version-control.md
+    version: 1.0.0
+
+  - module_id: MKT-001
+    name: market-research
+    category: market-research
+    description: Market boundaries, sizing, trends, segments, customers, and competitors.
+    status: in_progress
+    triggers: [market_size, market_trends, customer_research, competitor_analysis, demand_validation]
+    exclusions: [copy_editing_only, unrelated_operational_question]
+    industries: [cross_industry]
+    dependencies: [CORE-001, PI-001]
+    default_priority: MANDATORY
+    loading_level: L2
+    inputs: [business_scope, geography, target_segment, time_horizon]
+    outputs: [market_analysis, source_backed_findings, evidence_gaps]
+    references:
+      - references/market-research/core-workflow.md
+      - references/market-research/market-sizing.md
+      - references/market-research/customer-analysis.md
+      - references/market-research/competitor-analysis.md
+    version: 1.0.0
+
+  - module_id: STR-001
+    name: business-strategy
+    category: business-strategy
+    description: Positioning, value proposition, business model, go-to-market, and strategic choices.
+    status: in_progress
+    triggers: [positioning, business_model, value_proposition, go_to_market, swot, marketing_mix]
+    exclusions: [standalone_arithmetic_check]
+    industries: [cross_industry]
+    dependencies: [CORE-001, PI-001]
+    default_priority: MANDATORY
+    loading_level: L2
+    inputs: [project_profile, customer_needs, relevant_market_evidence]
+    outputs: [strategic_options, recommendations, decision_impacts]
+    references:
+      - references/business-strategy/core-workflow.md
+      - references/business-strategy/business-model-canvas.md
+      - references/business-strategy/positioning-and-4p.md
+    version: 1.0.0
+
+  - module_id: FIN-001
+    name: financial-analysis
+    category: financial-analysis
+    description: Costs, pricing, unit economics, break-even, cash flow, and scenarios.
+    status: in_progress
+    triggers: [cost_analysis, pricing, unit_economics, break_even, cash_flow, financial_forecast]
+    exclusions: [nonfinancial_copy_edit]
+    industries: [cross_industry]
+    dependencies: [CORE-001, PI-001]
+    default_priority: MANDATORY
+    loading_level: L2
+    inputs: [price, volume_assumptions, fixed_costs, variable_costs, period, currency]
+    outputs: [calculations, scenarios, sensitivity, assumptions_and_limits]
+    references:
+      - references/financial-analysis/core-workflow.md
+      - references/financial-analysis/cost-structure-and-pricing.md
+      - references/financial-analysis/unit-economics.md
+      - references/financial-analysis/break-even-and-sensitivity.md
+      - references/financial-analysis/cash-flow.md
+    version: 1.0.0
+
+  - module_id: OPS-001
+    name: product-operations
+    category: product-operations
+    description: Product scope, MVP, sourcing, production, delivery, operations, and validation experiments.
+    status: in_progress
+    triggers: [product_design, mvp, supplier, production, fulfillment, operations, experiment_design]
+    exclusions: [strategy_only_without_operating_implications]
+    industries: [cross_industry]
+    dependencies: [CORE-001, PI-001]
+    default_priority: MANDATORY
+    loading_level: L2
+    inputs: [customer_problem, product_constraints, resources, delivery_context]
+    outputs: [product_or_operating_plan, validation_steps, constraints]
+    references:
+      - references/product-operations/core-workflow.md
+      - references/product-operations/product-portfolio.md
+      - references/product-operations/mvp-and-validation.md
+      - references/product-operations/supplier-and-operations.md
+    version: 1.0.0
+
+  - module_id: BPG-001
+    name: business-plan-generation
+    category: business-plan-generation
+    description: Assemble a coherent plan or pitch artifact from current evidence, decisions, and analyses.
+    status: in_progress
+    triggers: [business_plan, pitch_deck, integrated_plan, investor_brief]
+    exclusions: [single_question_without_document_request]
+    industries: [cross_industry]
+    dependencies: [CORE-001, PI-001, MKT-001, STR-001, FIN-001, OPS-001]
+    default_priority: MANDATORY
+    loading_level: L3
+    inputs: [current_project_state, relevant_analyses, requested_format, audience]
+    outputs: [business_plan_or_requested_artifact, gap_list]
+    references:
+      - references/business-plan-generation/core-workflow.md
+      - references/business-plan-generation/structure-design.md
+      - references/business-plan-generation/quality-review.md
+    version: 1.0.0
+
+  - module_id: IND-FOOD-001
+    name: food-and-beverage
+    category: industry
+    description: Food product, sourcing, packaging, production, and safety considerations when applicable.
+    status: planned
+    triggers: [food_product, food_production, food_packaging, food_supply_chain]
+    exclusions: [tasks_without_food_related_activity]
+    industries: [food-beverage]
+    dependencies: [CORE-001, OPS-001]
+    default_priority: RECOMMENDED
+    loading_level: L2
+    inputs: [product_type, market_jurisdiction, production_context]
+    outputs: [industry_constraints, operational_questions, validation_needs]
+    references: [references/industry-modules/food-beverage/food-product-operations.md]
+    version: 1.0.0
+
+  - module_id: IND-CREATIVE-001
+    name: cultural-and-creative
+    category: industry
+    description: Cultural products, creative IP, storytelling, and experience design where relevant.
+    status: planned
+    triggers: [creative_product, cultural_ip, cultural_gift, brand_story]
+    exclusions: [tasks_without_creative_or_cultural_activity]
+    industries: [cultural-creative]
+    dependencies: [CORE-001, STR-001, OPS-001]
+    default_priority: OPTIONAL
+    loading_level: L2
+    inputs: [creative_concept, audience, cultural_context]
+    outputs: [creative_direction, differentiation_options, validation_questions]
+    references: [references/industry-modules/cultural-creative/creative-product-and-ip.md]
+    version: 1.0.0

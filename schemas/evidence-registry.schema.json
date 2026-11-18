@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-startup-planner.local/schemas/evidence-registry.schema.json",
+  "title": "Evidence Registry",
+  "description": "Traceable evidence supporting or challenging project claims. A source reference does not by itself prove that a claim is true.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "evidence"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/id"},
+    "evidence": {"type": "array", "items": {"$ref": "#/$defs/item"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_id", "claim", "source_type", "source_ref", "observed_at", "confidence"],
+      "properties": {
+        "evidence_id": {"$ref": "#/$defs/id"},
+        "claim": {"type": "string", "minLength": 1},
+        "source_type": {"type": "string", "enum": ["primary", "official_secondary", "secondary", "user_provided", "internal_analysis", "other"]},
+        "source_ref": {"type": "string", "minLength": 1, "description": "URL, workspace-relative path, or clear description of the user-provided source."},
+        "publisher": {"type": ["string", "null"]},
+        "published_at": {"type": ["string", "null"], "format": "date"},
+        "observed_at": {"type": "string", "format": "date-time"},
+        "scope": {"type": ["string", "null"], "description": "Geography, population, period, product, or other limits on the claim."},
+        "confidence": {"type": "string", "enum": ["high", "medium", "low", "unassessed"]},
+        "limitations": {"type": "array", "items": {"type": "string"}},
+        "supports_refs": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+        "contradicts_refs": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true}
+      }
+    }
+  }
+}

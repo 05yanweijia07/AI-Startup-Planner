@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "DEMO-001",
+  "evidence": [{
+    "evidence_id": "EVD-001",
+    "claim": "A fictional planning prompt proposes asking residents about repair needs.",
+    "source_type": "internal_analysis",
+    "source_ref": "This fixture text; it is not collected research.",
+    "publisher": null,
+    "published_at": null,
+    "observed_at": "2026-01-11T09:00:00Z",
+    "scope": "Illustrative format only; no real people or place.",
+    "confidence": "unassessed",
+    "limitations": ["Not empirical evidence."],
+    "supports_refs": [],
+    "contradicts_refs": []
+  }]
+}

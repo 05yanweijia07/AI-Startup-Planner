@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-startup-planner.local/schemas/dependency-graph.schema.json",
+  "title": "Project Dependency Graph",
+  "description": "Explicit links among project facts and work products so changed inputs can mark dependent outputs stale.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "nodes", "edges"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/id"},
+    "nodes": {"type": "array", "items": {"$ref": "#/$defs/node"}},
+    "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_id", "kind", "label", "ref"],
+      "properties": {
+        "node_id": {"$ref": "#/$defs/id"},
+        "kind": {"type": "string", "enum": ["profile_field", "decision", "evidence", "assumption", "analysis", "deliverable", "gate"]},
+        "label": {"type": "string", "minLength": 1},
+        "ref": {"type": "string", "minLength": 1, "description": "Stable record ID or workspace-relative file path."},
+        "status": {"type": "string", "enum": ["current", "stale", "archived"], "default": "current"}
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to", "relation"],
+      "properties": {
+        "from": {"$ref": "#/$defs/id"},
+        "to": {"$ref": "#/$defs/id"},
+        "relation": {"type": "string", "enum": ["depends_on", "supports", "contradicts", "supersedes"]},
+        "note": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

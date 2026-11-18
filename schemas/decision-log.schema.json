@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-startup-planner.local/schemas/decision-log.schema.json",
+  "title": "Decision Log",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "decisions"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"$ref": "#/$defs/id"},
+    "decisions": {"type": "array", "items": {"$ref": "#/$defs/decision"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_id", "topic", "choice", "status", "decided_at"],
+      "properties": {
+        "decision_id": {"$ref": "#/$defs/id"},
+        "topic": {"type": "string", "minLength": 1},
+        "choice": {"type": "string", "minLength": 1},
+        "rationale": {"type": ["string", "null"]},
+        "status": {"type": "string", "enum": ["proposed", "confirmed", "superseded", "withdrawn"]},
+        "decided_at": {"type": "string", "format": "date-time"},
+        "decided_by": {"type": ["string", "null"]},
+        "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+        "supersedes": {"anyOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]},
+        "impact_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    }
+  }
+}
